@@ -9,7 +9,7 @@
   "人工智能算法": {
     "神经网络": "content/ai/neural_networks.md"
   },
-  "光通信": {
-    "光纤链路": "content/optical_fiber_channel.pdf"
+  "Optical fiber communication": {
+    "Split-step fourier method": "content/optical/NLSE_SSFM.pdf"
   }
 }
