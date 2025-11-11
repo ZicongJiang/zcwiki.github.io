@@ -1,16 +1,18 @@
 {
-  "基础数学知识": {
-    "线性代数": "content/math/linear_algebra.md",
-    "Cubic spline interpolation complexity": "content/math/cubic_spline_complexity.pdf"
+  "Basic Math": {
+    "Linear Algebra": "content/math/linear_algebra.md"
   },
-  "数字通信": {
-    "均衡器": "content/digital_comm/equalizer.md",
-    "ISI 定义": "content/digital_comm/isi.md"
+  "Artificial Intelligence algorithms": {
+    "Neural Networks": "content/ai/neural_networks.md"
   },
-  "人工智能算法": {
-    "神经网络": "content/ai/neural_networks.md"
+  "Optical Fiber Communication": {
+    "Split-step Fourier Method": "content/optical/NLSE_SSFM.md"
   },
-  "Optical fiber communication": {
-    "Split-step fourier method": "content/optical/NLSE_SSFM.md"
+  "Digital Communication": {
+    "Equalizer": "content/digital_comm/equalizer.md",
+    "ISI Definition": "content/digital_comm/isi.md"
+  },
+  "Other Algorithms": {
+    "Cubic Spline Interpolation Complexity": "content/math/cubic_spline_complexity.pdf"
   }
 }
