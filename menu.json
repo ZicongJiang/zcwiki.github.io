@@ -11,6 +11,6 @@
     "神经网络": "content/ai/neural_networks.md"
   },
   "Optical fiber communication": {
-    "Split-step fourier method": "content/optical/NLSE_SSFM.pdf"
+    "Split-step fourier method": "content/optical/NLSE_SSFM.md"
   }
 }
