@@ -1,6 +1,7 @@
 {
   "基础数学知识": {
-    "线性代数": "content/math/linear_algebra.md"
+    "线性代数": "content/math/linear_algebra.md",
+    "Cubic spline interpolation complexity": "content/math/cubic_spline_complexity.pdf"
   },
   "数字通信": {
     "均衡器": "content/digital_comm/equalizer.md",
