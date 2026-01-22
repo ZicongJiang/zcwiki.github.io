@@ -48,6 +48,8 @@ async function buildMenu() {
 }
 
 // 加载内容：Markdown 渲染或 PDF/HTML 嵌入
+// script.js
+
 async function loadContent(path) {
   const contentEl = document.getElementById('content');
   if (/.pdf$/i.test(path) || /.html?$/i.test(path)) {
@@ -60,7 +62,14 @@ async function loadContent(path) {
     return;
   }
   const md = await res.text();
+  
+  // 1. Convert Markdown to HTML
   contentEl.innerHTML = marked.parse(md);
+
+  // 2. NEW: Tell MathJax to render the math in the new content
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    MathJax.typesetPromise([contentEl]).catch(err => console.log('MathJax error:', err));
+  }
 }
 
 document.addEventListener('DOMContentLoaded', buildMenu);

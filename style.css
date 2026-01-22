@@ -93,3 +93,37 @@ body {
   border: none;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
+
+
+/* style.css */
+
+/* ... existing code ... */
+
+/* ========== Markdown Content Fixes ========== */
+#content h1, #content h2, #content h3, #content h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+#content p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+#content ul, #content ol {
+  margin-left: 2rem; /* Restore indentation for lists */
+  margin-bottom: 1rem;
+}
+
+#content li {
+  margin-bottom: 0.25rem;
+  list-style-position: outside; /* Ensure bullets are visible */
+}
+
+/* Optional: Make math look a bit better if it overflows */
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden; 
+  max-width: 100%;
+}
