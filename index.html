@@ -1,24 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zicong's Wiki</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zicong's Blog</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
-
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+  
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        inlineMath: [['$', '$'], ['\\(', '\\)']] // Allow $ for inline math
       },
       svg: {
         fontCache: 'global'
@@ -28,29 +22,15 @@
   <script type="text/javascript" id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
-
   <script src="script.js" defer></script>
 </head>
 <body>
-  
-  <aside id="sidebar">
-    <div class="brand">
-      <h1>Zicong's Wiki</h1>
-    </div>
-    <nav id="menu"></nav>
-  </aside>
-
-  <main id="main-container">
-    <div id="loading-spinner" class="hidden">
-      <div class="spinner"></div>
-    </div>
-    <div id="content" class="markdown-body">
-      <div class="welcome-message">
-        <h2>Welcome 👋</h2>
-        <p>Please select a topic from the sidebar to get started.</p>
-      </div>
-    </div>
-  </main>
-
+  <div id="sidebar">
+    <h2>Contents</h2>
+    <div id="menu"></div>
+  </div>
+  <div id="content">
+    <p>Please select an item from the left menu to view details.</p>
+  </div>
 </body>
 </html>
