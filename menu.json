@@ -6,7 +6,8 @@
     "Neural Networks": "content/ai/neural_networks.md"
   },
   "Optical Fiber Communication": {
-    "Split-step Fourier Method": "content/optical/NLSE_SSFM.pdf"
+    "Split-step Fourier Method": "content/optical/NLSE_SSFM.pdf",
+    "Fiber Optic Communication (Agrawal) - Note": "content/optical/Fiber_optic_Agrawal.md"
   },
   "Digital Communication": {
     "Equalizer": "content/digital_comm/equalizer.md",
