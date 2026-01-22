@@ -1,129 +1,285 @@
-/* ========== 全局 & 布局 ========== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* ========== Variables & Reset ========== */
+:root {
+  --primary-color: #2563eb;
+  --sidebar-bg: #f8f9fa;
+  --sidebar-border: #e5e7eb;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --bg-color: #ffffff;
+  --font-ui: 'Inter', sans-serif;
+  --font-body: 'Merriweather', serif;
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
+  margin: 0;
   display: flex;
   height: 100vh;
-  font-family: 'Roboto', sans-serif;
-  background: #f0f2f5;
-  color: #333;
+  font-family: var(--font-ui);
+  color: var(--text-main);
+  background: var(--bg-color);
+  overflow: hidden; /* Prevent body scroll, let containers scroll */
 }
 
-/* ========== 侧边栏 ========== */
+/* ========== Sidebar ========== */
 #sidebar {
   width: 280px;
-  background: #ffffff;
-  border-right: 1px solid #e0e0e0;
-  overflow-y: auto;
-  padding: 1.5rem;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.03);
-}
-#sidebar h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: 500;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
 }
 
-/* ========== 手风琴项 ========== */
-.accordion-item + .accordion-item {
-  margin-top: 0.5rem;
+.brand {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--sidebar-border);
 }
+
+.brand h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+#menu {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Accordion Items */
+.accordion-item {
+  margin-bottom: 0.5rem;
+}
+
 .accordion-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0.5rem 0.75rem;
   cursor: pointer;
-  padding: 0.6rem 0.8rem;
-  background: #fafafa;
-  border-radius: 4px;
+  border-radius: var(--radius);
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.95rem;
   transition: background 0.2s;
-  font-weight: 500;
-  font-size: 1.1rem;
 }
+
 .accordion-header:hover {
-  background: #f0f0f0;
+  background: rgba(0,0,0,0.05);
 }
+
 .accordion-header .arrow {
-  transition: transform 0.3s;
-  font-size: 0.9rem;
-  color: #888;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  transition: transform 0.2s;
 }
+
 .accordion-header.expanded .arrow {
   transform: rotate(90deg);
-  color: #555;
 }
 
-/* ========== 子菜单 ========== */
+/* Submenu */
 .submenu {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.35s ease;
-  margin-left: 1rem;
-}
-.submenu.open {
-  /* 足够放下所有子项，高度可调 */
-  max-height: 500px;
-}
-.submenu li {
   list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
 }
-.submenu li + li {
-  margin-top: 0.3rem;
+
+.submenu.open {
+  max-height: 1000px; /* Arbitrary large height */
 }
+
+.submenu li {
+  margin-top: 2px;
+}
+
 .submenu a {
   display: block;
-  padding: 0.4rem 0;
+  padding: 0.4rem 0.75rem 0.4rem 2rem;
   text-decoration: none;
-  color: #444;
-  font-size: 0.95rem;
-  transition: color 0.2s;
-}
-.submenu a:hover, .submenu a.active {
-  color: #007acc;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  border-radius: var(--radius);
+  transition: all 0.2s;
 }
 
-/* ========== 主体内容区 ========== */
-#content {
-  flex: 1;
-  padding: 2rem;
-  overflow-y: auto;
+.submenu a:hover {
+  background: #eff6ff;
+  color: var(--primary-color);
 }
+
+.submenu a.active {
+  background: #eff6ff;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+/* ========== Main Content Area ========== */
+#main-container {
+  flex: 1;
+  position: relative;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  background: white;
+}
+
+#content {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  min-height: 100%;
+}
+
+/* Loading Spinner */
+#loading-spinner {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  backdrop-filter: blur(2px);
+}
+#loading-spinner.hidden { display: none; }
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ========== Markdown Styling (The Fancy Part) ========== */
+/* Reset content styles specifically inside #content to avoid global resets breaking things */
+
+#content {
+  font-family: var(--font-body);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+/* Headers */
+#content h1, #content h2, #content h3 {
+  font-family: var(--font-ui);
+  color: #111827;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+#content h1 { font-size: 2.25rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; }
+#content h2 { font-size: 1.75rem; }
+#content h3 { font-size: 1.4rem; }
+
+/* Lists - Fixing the missing bullets issue */
+#content ul, #content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+#content li {
+  margin-bottom: 0.5rem;
+}
+
+/* Links */
+#content a {
+  color: var(--primary-color);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+#content a:hover {
+  border-bottom-color: var(--primary-color);
+}
+
+/* Code Blocks */
+#content pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  font-family: 'Menlo', 'Monaco', monospace;
+  font-size: 0.9rem;
+}
+#content code {
+  background: #f1f5f9;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Menlo', monospace;
+  font-size: 0.85em;
+  color: #be185d;
+}
+#content pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* Blockquotes */
+#content blockquote {
+  border-left: 4px solid var(--primary-color);
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+/* Tables */
+#content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+#content th, #content td {
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem;
+  text-align: left;
+}
+#content th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+/* Images */
+#content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* IFrames (PDF/HTML) */
 #content iframe {
   width: 100%;
-  height: 90vh;
+  height: 85vh;
   border: none;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-
-/* style.css */
-
-/* ... existing code ... */
-
-/* ========== Markdown Content Fixes ========== */
-#content h1, #content h2, #content h3, #content h4 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
-
-#content p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-#content ul, #content ol {
-  margin-left: 2rem; /* Restore indentation for lists */
-  margin-bottom: 1rem;
-}
-
-#content li {
-  margin-bottom: 0.25rem;
-  list-style-position: outside; /* Ensure bullets are visible */
-}
-
-/* Optional: Make math look a bit better if it overflows */
+/* MathJax Overflow Fix */
 mjx-container {
   overflow-x: auto;
-  overflow-y: hidden; 
   max-width: 100%;
+  padding: 0.5rem 0;
 }
