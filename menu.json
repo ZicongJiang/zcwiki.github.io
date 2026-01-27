@@ -2,18 +2,12 @@
   "Basic Math": {
     "Linear Algebra": "content/math/linear_algebra.md"
   },
-  "Artificial Intelligence algorithms": {
-    "Neural Networks": "content/ai/neural_networks.md"
+  "Algorithms": {
+    "智能优化算法及其 MATLAB 实例 (包子阳)": "content/algorithms/智能优化算法.md",
+    "Cubic Spline Interpolation Complexity": "content/math/cubic_spline_complexity.pdf"
   },
   "Optical Fiber Communication": {
     "Split-step Fourier Method": "content/optical/NLSE_SSFM.pdf",
-    "Fiber Optic Communication (Agrawal) - Note": "content/optical/Fiber_optic_Agrawal.md"
-  },
-  "Digital Communication": {
-    "Equalizer": "content/digital_comm/equalizer.md",
-    "ISI Definition": "content/digital_comm/isi.md"
-  },
-  "Other Algorithms": {
-    "Cubic Spline Interpolation Complexity": "content/math/cubic_spline_complexity.pdf"
+    "Fiber Optic Communication (Agrawal)": "content/optical/Fiber_optic_Agrawal.md"
   }
 }
