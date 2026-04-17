@@ -124,6 +124,52 @@ body {
 /* Optional: Make math look a bit better if it overflows */
 mjx-container {
   overflow-x: auto;
-  overflow-y: hidden; 
+  overflow-y: hidden;
   max-width: 100%;
+}
+
+/* ========== In-page TOC ========== */
+#toc {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+.toc-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+#toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#toc li a {
+  display: block;
+  padding: 0.2rem 0;
+  text-decoration: none;
+  color: #555;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  transition: color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#toc li a:hover { color: #007acc; }
+#toc li.toc-h1 { padding-left: 0; font-weight: 500; }
+#toc li.toc-h2 { padding-left: 0.8rem; }
+#toc li.toc-h3 { padding-left: 1.6rem; font-size: 0.82rem; color: #777; }
+
+/* ========== Content images ========== */
+#content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }

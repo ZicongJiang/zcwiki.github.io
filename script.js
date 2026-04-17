@@ -1,4 +1,4 @@
-// 动态生成手风琴菜单
+// Build accordion menu from menu.json
 async function buildMenu() {
   const res = await fetch('menu.json');
   if (!res.ok) {
@@ -12,13 +12,11 @@ async function buildMenu() {
     const item = document.createElement('div');
     item.className = 'accordion-item';
 
-    // header
     const header = document.createElement('div');
     header.className = 'accordion-header';
     header.innerHTML = `<span>${category}</span><span class="arrow">▶</span>`;
     item.appendChild(header);
 
-    // 子菜单
     const ul = document.createElement('ul');
     ul.className = 'submenu';
     for (const [label, path] of Object.entries(items)) {
@@ -29,7 +27,6 @@ async function buildMenu() {
       a.addEventListener('click', e => {
         e.preventDefault();
         loadContent(path);
-        // 高亮当前
         container.querySelectorAll('a').forEach(x => x.classList.remove('active'));
         a.classList.add('active');
       });
@@ -39,7 +36,6 @@ async function buildMenu() {
     item.appendChild(ul);
     container.appendChild(item);
 
-    // 手风琴切换逻辑
     header.addEventListener('click', () => {
       const expanded = header.classList.toggle('expanded');
       ul.classList.toggle('open', expanded);
@@ -47,29 +43,98 @@ async function buildMenu() {
   }
 }
 
-// 加载内容：Markdown 渲染或 PDF/HTML 嵌入
-// script.js
+// Resolve a relative image path against the markdown file's directory
+function resolveImagePath(imgPath, mdPath) {
+  // mdPath e.g. "content/math/Dirac_approximation.md"
+  const dir = mdPath.replace(/\/[^/]+$/, '/'); // "content/math/"
+  // Build a URL relative to site root using URL API
+  const base = new URL(dir, window.location.href);
+  return new URL(imgPath, base).pathname.replace(/^\//, '');
+}
 
-async function loadContent(path) {
-  const contentEl = document.getElementById('content');
-  if (/.pdf$/i.test(path) || /.html?$/i.test(path)) {
-    contentEl.innerHTML = `<iframe src="${path}"></iframe>`;
+// Pre-process Obsidian wikilink images: ![[path]] → ![path](resolved)
+function preprocessObsidianImages(md, mdPath) {
+  return md.replace(/!\[\[([^\]]+)\]\]/g, (_, imgPath) => {
+    const resolved = resolveImagePath(imgPath.trim(), mdPath);
+    const name = imgPath.trim().split('/').pop();
+    return `![${name}](${resolved})`;
+  });
+}
+
+// Generate in-page TOC from rendered headings and inject into sidebar
+function buildTOC() {
+  const toc = document.getElementById('toc');
+  toc.innerHTML = '';
+
+  const headings = document.querySelectorAll('#content h1, #content h2, #content h3');
+  if (headings.length === 0) {
+    toc.style.display = 'none';
     return;
   }
+
+  toc.style.display = 'block';
+  const label = document.createElement('div');
+  label.className = 'toc-label';
+  label.textContent = 'On this page';
+  toc.appendChild(label);
+
+  const ul = document.createElement('ul');
+  headings.forEach((h, i) => {
+    // Add anchor id so we can scroll to it
+    if (!h.id) h.id = `heading-${i}`;
+
+    const li = document.createElement('li');
+    li.className = `toc-${h.tagName.toLowerCase()}`;
+    const a = document.createElement('a');
+    a.textContent = h.textContent;
+    a.href = `#${h.id}`;
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+  toc.appendChild(ul);
+}
+
+// Load content: render Markdown or embed PDF/HTML
+async function loadContent(path) {
+  const contentEl = document.getElementById('content');
+
+  if (/.pdf$/i.test(path) || /.html?$/i.test(path)) {
+    contentEl.innerHTML = `<iframe src="${path}"></iframe>`;
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
   const res = await fetch(path);
   if (!res.ok) {
     contentEl.innerHTML = `<p style="color:red">加载失败：${path}</p>`;
     return;
   }
-  const md = await res.text();
-  
-  // 1. Convert Markdown to HTML
-  contentEl.innerHTML = marked.parse(md);
+  let md = await res.text();
 
-  // 2. NEW: Tell MathJax to render the math in the new content
+  // Fix Obsidian image syntax and resolve relative image paths
+  md = preprocessObsidianImages(md, path);
+
+  // Custom marked renderer: resolve standard relative image paths too
+  const renderer = new marked.Renderer();
+  renderer.image = (href, title, text) => {
+    // href may be a plain string or object depending on marked version
+    const src = typeof href === 'object' ? href.href : href;
+    const alt = typeof href === 'object' ? href.text : text;
+    const resolved = /^https?:\/\//.test(src) ? src : resolveImagePath(src, path);
+    return `<img src="${resolved}" alt="${alt || ''}"${title ? ` title="${title}"` : ''} style="max-width:100%;height:auto;">`;
+  };
+
+  contentEl.innerHTML = marked.parse(md, { renderer });
+
   if (window.MathJax && window.MathJax.typesetPromise) {
     MathJax.typesetPromise([contentEl]).catch(err => console.log('MathJax error:', err));
   }
+
+  buildTOC();
 }
 
 document.addEventListener('DOMContentLoaded', buildMenu);
