@@ -1,13 +1,18 @@
 {
-  "Basic Math": {
-    "Linear Algebra": "content/math/linear_algebra.md"
+  "Basic Math and Algorithms": {
+    "Linear Algebra": "content/math/linear_algebra.md",
+    "Normal distribution-based Dirac delta function approximation": "content/math/Dirac_approximation.md",
+    "Cubic Spline Interpolation Complexity": "content/math/cubic_spline_complexity.pdf",
+    "智能优化算法及其 MATLAB 实例 (包子阳)": "content/algorithms/智能优化算法.md"
   },
-  "Algorithms": {
-    "智能优化算法及其 MATLAB 实例 (包子阳)": "content/algorithms/智能优化算法.md",
-    "Cubic Spline Interpolation Complexity": "content/math/cubic_spline_complexity.pdf"
+  "Digital Communication and Signal Processing": {
+  },
+  "Machine Learning": {
+    "Decision Tree": "content/ml/Decision_Tree.md"
   },
   "Optical Fiber Communication": {
     "Split-step Fourier Method": "content/optical/NLSE_SSFM.pdf",
-    "Fiber Optic Communication (Agrawal)": "content/optical/Fiber_optic_Agrawal.md"
+    "Fiber Optic Communication (Agrawal)": "content/optical/Fiber_optic_Agrawal.md",
+    "Power Profile Estimation Related Algorithms": "content/optical/PPE_Related.md"
   }
 }
