@@ -43,20 +43,24 @@ async function buildMenu() {
   }
 }
 
-// Resolve a relative image path against the markdown file's directory
+// Resolve an image path against the markdown file's directory.
+// Returns a root-relative path starting with / to avoid double-resolution.
 function resolveImagePath(imgPath, mdPath) {
-  // mdPath e.g. "content/math/Dirac_approximation.md"
   const dir = mdPath.replace(/\/[^/]+$/, '/'); // "content/math/"
-  // Build a URL relative to site root using URL API
   const base = new URL(dir, window.location.href);
-  return new URL(imgPath, base).pathname.replace(/^\//, '');
+  return new URL(imgPath, base).pathname; // e.g. /image%2020260417164726.png
 }
 
-// Pre-process Obsidian wikilink images: ![[path]] → ![path](resolved)
+// Pre-process Obsidian wikilink images: ![[path]] → ![name](/resolved)
+// If the wikilink has no path separator, treat it as vault-root relative.
 function preprocessObsidianImages(md, mdPath) {
   return md.replace(/!\[\[([^\]]+)\]\]/g, (_, imgPath) => {
-    const resolved = resolveImagePath(imgPath.trim(), mdPath);
-    const name = imgPath.trim().split('/').pop();
+    imgPath = imgPath.trim();
+    const name = imgPath.split('/').pop();
+    // No path separators → Obsidian searches vault root
+    const resolved = imgPath.includes('/')
+      ? resolveImagePath(imgPath, mdPath)
+      : '/' + encodeURI(imgPath);
     return `![${name}](${resolved})`;
   });
 }
@@ -118,13 +122,13 @@ async function loadContent(path) {
   // Fix Obsidian image syntax and resolve relative image paths
   md = preprocessObsidianImages(md, path);
 
-  // Custom marked renderer: resolve standard relative image paths too
+  // Custom marked renderer: resolve relative image paths, but skip paths
+  // that are already absolute or root-relative (pre-processed Obsidian images).
   const renderer = new marked.Renderer();
   renderer.image = (href, title, text) => {
-    // href may be a plain string or object depending on marked version
     const src = typeof href === 'object' ? href.href : href;
     const alt = typeof href === 'object' ? href.text : text;
-    const resolved = /^https?:\/\//.test(src) ? src : resolveImagePath(src, path);
+    const resolved = /^https?:\/\/|^\//.test(src) ? src : resolveImagePath(src, path);
     return `<img src="${resolved}" alt="${alt || ''}"${title ? ` title="${title}"` : ''} style="max-width:100%;height:auto;">`;
   };
 
