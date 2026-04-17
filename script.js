@@ -57,10 +57,10 @@ function preprocessObsidianImages(md, mdPath) {
   return md.replace(/!\[\[([^\]]+)\]\]/g, (_, imgPath) => {
     imgPath = imgPath.trim();
     const name = imgPath.split('/').pop();
-    // No path separators → Obsidian searches vault root
+    // No path separators → Obsidian bare filename, look in /assets/
     const resolved = imgPath.includes('/')
       ? resolveImagePath(imgPath, mdPath)
-      : '/' + encodeURI(imgPath);
+      : '/assets/' + encodeURI(imgPath);
     return `![${name}](${resolved})`;
   });
 }

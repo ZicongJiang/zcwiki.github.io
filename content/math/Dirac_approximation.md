@@ -31,7 +31,7 @@ where $\mu$ is the mean and $\sigma$ is the standard deviation.
 
 > **Figure:** Normal distribution with different means and variances. The red curve is the standard normal distribution.
 
-![[../../image 20260417164726.png]]
+![[image 20260417164726.png]]
 
 ---
 
