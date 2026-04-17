@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth *)",
+      "Bash(git credential-osxkeychain *)",
+      "Read(//Users/zicongj/.ssh/**)",
+      "Bash(ssh -T git@github.com)"
+    ]
+  }
+}
