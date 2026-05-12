@@ -4,6 +4,7 @@
 
 The power can be expressed as a function of distance $z$, so we can express the function of power as an ODE:
 
+
 $$\frac{\partial P(z)}{\partial z} = -\frac{\alpha}{2} P(z)$$
 
 The solution of this ODE is obvious: $P(z) = e^{(-\alpha z/2)} P(0)$.

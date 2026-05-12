@@ -13,6 +13,7 @@
   "Optical Fiber Communication": {
     "Split-step Fourier Method": "content/optical/NLSE_SSFM.pdf",
     "Fiber Optic Communication (Agrawal)": "content/optical/Fiber_optic_Agrawal.md",
-    "Power Profile Estimation Related Algorithms": "content/optical/PPE_Related.md"
+    "Power Profile Estimation Related Algorithms": "content/optical/PPE_Related.md",
+    "光纤通信基础": "content/optical/fundamental.md"
   }
 }
