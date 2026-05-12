@@ -1,24 +1,3 @@
----
-
-title: 光纤相干通信系统：性能度量、DSP、损伤、PCS、随机数与高阶效应
-
-created: 2026-05-12
-
-tags:
-
-- coherent-optical-communication
-
-- DSP
-
-- fiber-nonlinearity
-
-- PCS
-
-- simulation
-
-- personal-wiki
-
----
 # 光纤相干通信系统知识点笔记
 
   
@@ -27,11 +6,7 @@ tags:
 
 > 记号约定：除非特别说明，$T_s=1/R_s$ 为符号周期，$R_s$ 为符号率，$\omega=2\pi f$ 为角频率，粗体 $\mathbf{x}$ 表示双偏振 Jones 向量。
 
-  
-
 ---
-
-  
 
 ## 目录
 
