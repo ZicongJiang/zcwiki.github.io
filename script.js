@@ -1,3 +1,29 @@
+// ── 数学公式保护（防止 marked.js 破坏 LaTeX 语法）──────────────────
+function protectMath(md) {
+  const store = [];
+  const token = (i) => `\x02MATH${i}\x03`;   // 用不可见字符做占位符，不会被 marked 处理
+
+  // 先提取块级公式 $$...$$（必须先于行内，避免把 $$ 匹配成两个 $）
+  md = md.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
+    store.push(match);
+    return token(store.length - 1);
+  });
+
+  // 再提取行内公式 $...$（排除空公式 $$ 已被上面处理）
+  md = md.replace(/\$([^\$\n]+?)\$/g, (match) => {
+    store.push(match);
+    return token(store.length - 1);
+  });
+
+  return { md, store };
+}
+
+function restoreMath(html, store) {
+  return html.replace(/\x02MATH(\d+)\x03/g, (_, i) => store[Number(i)]);
+}
+// ────────────────────────────────────────────────────────────────────
+
+
 // Build accordion menu from menu.json
 async function buildMenu() {
   const res = await fetch('menu.json');
@@ -132,7 +158,9 @@ async function loadContent(path) {
     return `<img src="${resolved}" alt="${alt || ''}"${title ? ` title="${title}"` : ''} style="max-width:100%;height:auto;">`;
   };
 
-  contentEl.innerHTML = marked.parse(md, { renderer });
+  // 保护公式 → 渲染 Markdown → 还原公式
+  const { md: safeMd, store } = protectMath(md);
+  contentEl.innerHTML = restoreMath(marked.parse(safeMd, { renderer }), store);
 
   if (window.MathJax && window.MathJax.typesetPromise) {
     MathJax.typesetPromise([contentEl]).catch(err => console.log('MathJax error:', err));
