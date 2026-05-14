@@ -381,7 +381,7 @@ $$\mathrm{Var}[\phi(n+k) - \phi(n)] = 2\pi \Delta\nu_{\text{total}} \cdot k \cdo
     
 2. 对以第 $n$ 个符号为中心的块（块长 $2N_B + 1$），计算每个测试相位的代价函数： $$C_b(n) = \sum_{k=n-N_B}^{n+N_B} \min_{a_m \in \mathcal{A}} \left|r_k e^{-j\theta_b} - a_m\right|^2$$
     
-3. 最优相位估计： $$\hat{\phi}(n) = \theta_{b^_(n)}, \quad b^_(n) = \arg\min_b C_b(n)$$
+3. 最优相位估计： $$\hat{\phi}(n) = \theta_{b^{_}(n)}, \quad b^{_}(n) = \arg\min_b C_b(n)$$
     
 4. 相位解包（处理 $\pi/2$ 相位模糊）： $$\hat{\phi}_{\text{unwrap}}(n) = \hat{\phi}(n) + \frac{\pi}{2}\cdot k, \quad k \in \mathbb{Z}$$ （使相位变化最小的 $k$）
     
@@ -484,14 +484,14 @@ $$\hat{\phi}(n|n) = \hat{\phi}(n|n-1) + K(n)\left[z(n) - \hat{\phi}(n|n-1)\right
 
 $$P(n|n) = (1 - K(n)) P(n|n-1) \quad \text{（更新误差协方差）}$$
 
-**稳态 Kalman 增益**（稳态时 $P$ 收敛为常数 $P^*$）：
+**稳态 Kalman 增益**（稳态时 $P$ 收敛为常数 $P^{*}$）：
 
-$$P^* = \frac{Q}{2} + \sqrt{\frac{Q^2}{4} + QR}$$
+$$P^{*} = \frac{Q}{2} + \sqrt{\frac{Q^2}{4} + QR}$$
 
-$$K^* = \frac{P^_}{P^_ + R}$$
+$$K^{-} = \frac{P^{-}}{P^{*} + R}$$
 
-当 $Q \to 0$（线宽极窄）：$K^* \to 0$（几乎不更新，完全信任预测）  
-当 $Q \to \infty$（线宽极宽）：$K^* \to 1$（完全跟随观测）
+当 $Q \to 0$（线宽极窄）：$K^{-} \to 0$（几乎不更新，完全信任预测）  
+当 $Q \to \infty$（线宽极宽）：$K^{-} \to 1$（完全跟随观测）
 
 **BPS 与 Kalman 的关系**：BPS 可以看作是在 Wiener 相位噪声模型下的近似 MAP 估计，其块平均等效于 Kalman 滤波在稳态时的操作。
 
@@ -878,7 +878,7 @@ $$\boxed{P(a_k) = \frac{e^{-\nu |a_k|^2}}{\mathcal{Z}(\nu)}}$$
 
 16-QAM 星座点 $a_{ij} = (2i-5)/\sqrt{10} + j(2j-5)/\sqrt{10}$，$i,j\in{1,2,3,4}$（归一化使 $\mathbb{E}[|a|^2] = 1$）。有 3 种不同的能量级：
 
-$$|a|^2 \in \left{\frac{2}{10},\ \frac{10}{10},\ \frac{18}{10}\right} \quad \Rightarrow \quad P(a) \propto \left{e^{-\nu \cdot 0.2},\ e^{-\nu},\ e^{-1.8\nu}\right}$$
+$$|a|^2 \in \left\lbrace\frac{2}{10},\ \frac{10}{10},\ \frac{18}{10}\right\rbrace \quad \Rightarrow \quad P(a) \propto \left\lbrace e^{-\nu \cdot 0.2},\ e^{-\nu},\ e^{-1.8\nu}\right\rbrace$$
 
 对应 4 个内层点、8 个中间点、4 个外层点（概率比随 $\nu$ 变化）。
 
